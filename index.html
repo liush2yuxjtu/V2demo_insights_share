@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>insights-share A/B demo</title>
+    <style>
+      :root {
+        --bg: #f7f1e4;
+        --paper: rgba(255, 250, 240, 0.86);
+        --ink: #172126;
+        --muted: #5c625e;
+        --line: rgba(23, 33, 38, 0.16);
+        --accent: #9b4d1f;
+        --accent-soft: rgba(155, 77, 31, 0.12);
+        --duck: #f2bf2f;
+        --shadow: 0 28px 80px rgba(23, 33, 38, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(242, 191, 47, 0.18), transparent 26%),
+          radial-gradient(circle at 85% 10%, rgba(155, 77, 31, 0.12), transparent 28%),
+          linear-gradient(180deg, #f9f4e8 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .site {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 18px 88px;
+      }
+
+      .hero {
+        min-height: min(88svh, 900px);
+        display: grid;
+        align-items: end;
+        padding: 24px 0 28px;
+      }
+
+      .hero-shell {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(23, 33, 38, 0.08);
+        border-radius: 36px;
+        padding: clamp(28px, 5vw, 56px);
+        background:
+          linear-gradient(135deg, rgba(255, 250, 240, 0.94), rgba(247, 239, 219, 0.84)),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+        box-shadow: var(--shadow);
+      }
+
+      .hero-shell::before {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        top: -120px;
+        right: -120px;
+        background: radial-gradient(circle, rgba(242, 191, 47, 0.44), rgba(242, 191, 47, 0));
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 0.82rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1 {
+        max-width: 9.5ch;
+        margin: 0;
+        font-size: clamp(3.4rem, 10vw, 7.4rem);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+      }
+
+      .hero-copy {
+        margin-top: 22px;
+        max-width: 34rem;
+        font-size: clamp(1.05rem, 2vw, 1.28rem);
+        line-height: 1.6;
+        color: rgba(23, 33, 38, 0.84);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.78fr);
+        gap: 28px;
+        align-items: end;
+      }
+
+      .duck-note {
+        justify-self: end;
+        max-width: 360px;
+        padding: 22px 22px 20px;
+        border-radius: 28px;
+        background: rgba(255, 248, 228, 0.84);
+        border: 1px solid rgba(155, 77, 31, 0.15);
+        transform: rotate(-2deg);
+      }
+
+      .duck-icon {
+        font-size: 2.1rem;
+        line-height: 1;
+      }
+
+      .duck-note p {
+        margin: 12px 0 0;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .section {
+        margin-top: 54px;
+        padding-top: 8px;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: end;
+        margin-bottom: 18px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        letter-spacing: -0.04em;
+      }
+
+      .section-head p {
+        margin: 0;
+        max-width: 42rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .surface {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .prompt-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+        gap: 0;
+      }
+
+      .prompt-main,
+      .prompt-side,
+      .story-pane,
+      .export-pane {
+        padding: 24px;
+      }
+
+      .prompt-side {
+        border-left: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.26);
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.82rem;
+      }
+
+      .copy-block {
+        margin-top: 18px;
+      }
+
+      .copy-block h3,
+      .story-pane h3,
+      .export-pane h3 {
+        margin: 0 0 10px;
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+      }
+
+      .copy-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 10px;
+      }
+
+      .copy-row p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .copy-btn {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font: inherit;
+        font-size: 0.95rem;
+        cursor: pointer;
+        color: #fff9f1;
+        background: linear-gradient(135deg, #9b4d1f, #6e3412);
+      }
+
+      .copy-btn:hover {
+        filter: brightness(1.04);
+      }
+
+      pre {
+        margin: 0;
+        overflow: auto;
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid rgba(23, 33, 38, 0.08);
+        background: rgba(23, 33, 38, 0.92);
+        color: #fdf6ea;
+        font-size: 0.95rem;
+        line-height: 1.55;
+        font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .side-links {
+        display: grid;
+        gap: 14px;
+      }
+
+      .side-links a {
+        display: block;
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(23, 33, 38, 0.08);
+        background: rgba(255, 255, 255, 0.56);
+        text-decoration: none;
+      }
+
+      .side-links strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .side-links span {
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .story-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        gap: 0;
+      }
+
+      .story-pane:first-child {
+        border-right: 1px solid var(--line);
+        background:
+          radial-gradient(circle at top left, rgba(242, 191, 47, 0.16), transparent 34%),
+          rgba(255, 255, 255, 0.26);
+      }
+
+      .story-text {
+        font-size: 1.06rem;
+        line-height: 1.9;
+      }
+
+      .story-text p {
+        margin: 0 0 1rem;
+      }
+
+      .export-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .export-pane {
+        min-height: 100%;
+      }
+
+      .export-meta {
+        margin-bottom: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .footer {
+        margin-top: 54px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 920px) {
+        .hero-grid,
+        .prompt-layout,
+        .story-layout,
+        .export-grid,
+        .section-head {
+          grid-template-columns: 1fr;
+        }
+
+        .duck-note {
+          justify-self: start;
+          transform: none;
+        }
+
+        .prompt-side,
+        .story-pane:first-child {
+          border-left: 0;
+          border-right: 0;
+          border-top: 1px solid var(--line);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="site">
+      <section class="hero">
+        <div class="hero-shell">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow">GitHub Pages / A-B Demo / Claude Code</p>
+              <h1>One Prompt, Two Memories.</h1>
+              <p class="hero-copy">
+                这是一个面向互联网分发的 `insights-share` 演示页：同一句问题，同一个模型，
+                只有工作区状态不同。没有 skill 的时候，Claude 说“这里没有这条经验”；装上 client skill 和第一条共享 insight 之后，它就能直接给出正确的三行经验总结。
+              </p>
+            </div>
+            <aside class="duck-note" aria-label="Duck summary">
+              <div class="duck-icon">🦆</div>
+              <p>
+                小鸭子以前每次都要重新学一次。现在，一只小鸭子学会了，下一次整队小鸭子都会了。
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Copy And Run</h2>
+            <p>这里放的是最值得复制的内容：稳定 A/B 共用 prompt、两条可直接在终端执行的验证命令，以及两条完整的复现实验脚本。</p>
+          </div>
+        </div>
+        <div class="surface prompt-layout">
+          <div class="prompt-main">
+            <div class="kicker">Stable A/B Prompt</div>
+            <div class="copy-block">
+              <div class="copy-row">
+                <p>这句就是现在 A/B 测试共用的同一条 init prompt。两边环境不同，但问题文本完全一致。</p>
+                <button class="copy-btn" data-copy-target="stable-prompt">Copy Prompt</button>
+              </div>
+              <pre id="stable-prompt">请先检查当前 workspace 里是否有与这个问题直接相关、已经存在并可用的 insight。问题是：Postgres 高并发下 lock timeout 怎么排查？如果有，请只根据那条 insight 用非常简单的中文输出 3 行：问题现象、正确步骤、常见误区。不要补充额外背景。如果没有，请明确说没有，不要编造。无论有没有 insight，第一行都必须正好写 case-answer。</pre>
+            </div>
+
+            <div class="copy-block">
+              <div class="copy-row">
+                <p>一行跑 `without`。它会从 GitHub clone 仓库，只保留 `prompt.md`，然后用 Haiku 去回答。</p>
+                <button class="copy-btn" data-copy-target="without-command">Copy Without</button>
+              </div>
+              <pre id="without-command">./demos/insights-share/demo_docs/final_case/verify_without_claude_p.sh</pre>
+            </div>
+
+            <div class="copy-block">
+              <div class="copy-row">
+                <p>一行跑 `with`。它会从 GitHub clone 仓库，再安装 client skill 和第一条共享 insight，然后用 Haiku 去回答。</p>
+                <button class="copy-btn" data-copy-target="with-command">Copy With</button>
+              </div>
+              <pre id="with-command">./demos/insights-share/demo_docs/final_case/verify_with_claude_p.sh</pre>
+            </div>
+          </div>
+
+          <aside class="prompt-side">
+            <div class="kicker">Reproduce</div>
+            <div class="side-links" style="margin-top: 18px">
+              <a href="demos/insights-share/demo_docs/final_case/reproduce_without_tmux.sh">
+                <strong>reproduce_without_tmux.sh</strong>
+                <span>从 `tmux` 开始，到 `/export` 落盘，再到清理会话结束。</span>
+              </a>
+              <a href="demos/insights-share/demo_docs/final_case/reproduce_with_tmux.sh">
+                <strong>reproduce_with_tmux.sh</strong>
+                <span>同样的模型、同样的问题，只是工作区里多了 skill 和共享 insight。</span>
+              </a>
+              <a href="https://github.com/liush2yuxjtu/V2demo_insights_share">
+                <strong>GitHub Repository</strong>
+                <span>互联网分发版本，从这里 clone，不依赖当前这台机器的本地文件。</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>The Duck Story</h2>
+            <p>给不想看代码的人看的版本：这个项目不是做文档库，而是在让助手拥有团队共享记忆。</p>
+          </div>
+        </div>
+        <div class="surface story-layout">
+          <div class="story-pane">
+            <div class="kicker">Short Version</div>
+            <div class="story-text" style="margin-top: 18px">
+              <p>有一只很可爱的小鸭子，在团队里天天帮大家做事。</p>
+              <p>以前它有个毛病：哪怕昨天已经学会了一条重要经验，今天另一个人来问相似问题，它还是会像第一次见到一样，回答得很空。</p>
+              <p>这个项目做的事很简单：给这只小鸭子加上一个团队共享的小脑子。</p>
+              <p>没有共享记忆时，它只能说“这里没有这条经验”；有了共享记忆后，它会自己把团队已经验证过的方法带回来。</p>
+            </div>
+          </div>
+          <div class="story-pane">
+            <div class="copy-row">
+              <h3>Full Story</h3>
+              <button class="copy-btn" data-copy-target="story-full">Copy Story</button>
+            </div>
+            <pre id="story-full">把这个项目想成一只团队里的小鸭子助手。
+
+它平时会帮大家回答问题，但以前有个很大的缺点：
+哪怕团队昨天已经学会了一条很有价值的经验，今天另一个人再遇到类似问题，它还是会像第一次见到一样，回答得很空。
+
+这次我们做的事情，就是给这只小鸭子加上一个“团队共享记忆”。
+
+我们拿同一个问题来做对比：
+Postgres 高并发下 lock timeout 怎么排查？
+
+第一个临时工作区里，只有 prompt.md。
+结果很像一只没有团队记忆的小鸭子：
+- 它知道这里像是一个项目目录
+- 但它拿不到真正可复用的经验
+- 所以它只能说：“这里没有这方面的内容，我帮不了你”
+
+第二个临时工作区里，我们放进了两样东西：
+- insights-wiki client skill
+- 一条已经整理好的共享经验：postgres-concurrency
+
+这次小鸭子的表现就完全不一样了。
+它不再空手回答，而是能直接把团队已经验证过的经验说出来：
+- 先看是不是有人把别人堵住了
+- 再看具体是哪种锁、哪个事务在抢资源
+- 不要一上来就盲目加连接池
+
+一句话结论：
+以前是每只小鸭子都要自己重新学一次。
+现在是一只小鸭子学会了，下一次整队小鸭子都会了。</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Two Claude Outputs</h2>
+            <p>这两份是真实落盘的 `claude -p` 输出，不是手写示例。它们都用 Haiku，同一个问题，差别只在于工作区里有没有安装 skill 和共享 insight。</p>
+          </div>
+        </div>
+        <div class="export-grid">
+          <article class="surface export-pane">
+            <div class="copy-row">
+              <h3>Without Skill</h3>
+              <button class="copy-btn" data-copy-target="without-output">Copy TXT</button>
+            </div>
+            <p class="export-meta">
+              只有 `prompt.md`。Claude 最终回答的是：没有 insight，不能编造。
+              <a href="demos/insights-share/demo_docs/final_case/verify_without_claude_p_output.txt">Open raw .txt</a>
+            </p>
+            <pre id="without-output">## Setup
+- fresh git clone: https://github.com/liush2yuxjtu/V2demo_insights_share.git
+- kept only prompt.md in the temp workspace
+- no client skill installed
+
+## pwd
+/private/tmp/insights-share-verify-without
+
+## file tree
+./prompt.md
+
+## final answer
+case-answer
+
+当前 workspace 中没有关于"Postgres 高并发下 lock timeout 排查"的 insight。</pre>
+          </article>
+
+          <article class="surface export-pane">
+            <div class="copy-row">
+              <h3>With Skill</h3>
+              <button class="copy-btn" data-copy-target="with-output">Copy TXT</button>
+            </div>
+            <p class="export-meta">
+              已装 `skills/insights-wiki/SKILL.md` 和 `wiki/database/postgres-concurrency.md`。
+              Claude 最终会给出三行结构化经验。
+              <a href="demos/insights-share/demo_docs/final_case/verify_with_claude_p_output.txt">Open raw .txt</a>
+            </p>
+            <pre id="with-output">## Setup
+- fresh git clone: https://github.com/liush2yuxjtu/V2demo_insights_share.git
+- installed client skill from the cloned repo
+- installed the first reusable shared insight from the cloned repo
+
+## pwd
+/private/tmp/insights-share-verify-with
+
+## file tree
+./prompt.md
+./skills/insights-wiki/SKILL.md
+./wiki/database/postgres-concurrency.md
+
+## first-setup-guide
+完成了！我为非技术新用户创建了一个简单的新手指南。
+
+## final answer
+case-answer
+问题现象：事务阻塞导致 lock timeout、吞吐下降和请求排队。
+正确步骤：先看阻塞链，再确认锁类型与热点事务。
+常见误区：直接扩大连接池。</pre>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        GitHub Pages for
+        <a href="https://github.com/liush2yuxjtu/V2demo_insights_share">V2demo_insights_share</a>.
+        Core demo files live in <code>demos/insights-share/demo_docs/final_case/</code>.
+      </footer>
+    </main>
+
+    <script>
+      const buttons = document.querySelectorAll("[data-copy-target]");
+      for (const button of buttons) {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) return;
+          const text = target.innerText;
+          try {
+            await navigator.clipboard.writeText(text);
+            const prev = button.textContent;
+            button.textContent = "Copied";
+            setTimeout(() => {
+              button.textContent = prev;
+            }, 1400);
+          } catch (err) {
+            console.error(err);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
