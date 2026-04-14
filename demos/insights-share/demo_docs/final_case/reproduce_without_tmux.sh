@@ -7,6 +7,7 @@ SOURCE_CLONE="/private/tmp/insights-share-source-without"
 WORKSPACE="/private/tmp/insights-share-case-without-client"
 SESSION="insights_case_without_repro"
 EXPORT_FILE="${SCRIPT_DIR}/claude_without_client_skill_export.md"
+FINAL_QUERY="请先检查当前 workspace 里是否有与这个问题直接相关、已经存在并可用的 insight。问题是：Postgres 高并发下 lock timeout 怎么排查？如果有，请只根据那条 insight 用非常简单的中文输出 3 行：问题现象、正确步骤、常见误区。不要补充额外背景。如果没有，请明确说没有，不要编造。无论有没有 insight，第一行都必须正好写 case-answer。"
 
 capture_pane() {
   tmux capture-pane -pt "${SESSION}:0" -S -400
@@ -49,7 +50,7 @@ mkdir -p "${WORKSPACE}"
 cp "${SOURCE_CLONE}/prompt.md" "${WORKSPACE}/prompt.md"
 
 tmux kill-session -t "${SESSION}" 2>/dev/null || true
-tmux new-session -d -s "${SESSION}" -c "${WORKSPACE}" "claude"
+tmux new-session -d -s "${SESSION}" -c "${WORKSPACE}" "claude --model haiku"
 
 first_screen="$(wait_for_any 45 "Yes, I trust this folder" "❯")"
 if [[ "${first_screen}" == "Yes, I trust this folder" ]]; then
@@ -61,8 +62,8 @@ sleep 2
 send_literal "! pwd && find . -maxdepth 4 -type f | sort"
 wait_for_any 30 "./prompt.md" "Only one file found" >/dev/null
 
-send_literal "这是 without-skill 版本。只根据这个 workspace 当前已有的内容，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 without-case。"
-wait_for_any 120 "⏺ without-case" >/dev/null
+send_literal "${FINAL_QUERY}"
+wait_for_any 120 "⏺ case-answer" >/dev/null
 
 send_literal "/export ${EXPORT_FILE}"
 wait_for_any 60 "Conversation exported to:" >/dev/null

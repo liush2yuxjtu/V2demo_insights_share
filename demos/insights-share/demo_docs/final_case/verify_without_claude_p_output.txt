@@ -10,8 +10,6 @@
 ./prompt.md
 
 ## final answer
-当前工作区里**没有**关于 Postgres 高并发 lock timeout 排查的经过验证的可复用 insight。
+case-answer
 
-工作区只有一个 `prompt.md`，内容是关于如何构建"团队共享 insights 的 wiki demo"这个项目的需求文档，和 Postgres 排查无关。
-
-如果你需要这方面的 insight，可以先通过该系统积累和验证后再使用，而不是现在直接编造一个。
+当前 workspace 中没有关于"Postgres 高并发下 lock timeout 排查"的 insight。

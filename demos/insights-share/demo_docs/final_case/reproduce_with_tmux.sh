@@ -7,6 +7,7 @@ SOURCE_CLONE="/private/tmp/insights-share-source-with"
 WORKSPACE="/private/tmp/insights-share-case-with-client"
 SESSION="insights_case_with_repro"
 EXPORT_FILE="${SCRIPT_DIR}/claude_with_client_skill_export.md"
+FINAL_QUERY="请先检查当前 workspace 里是否有与这个问题直接相关、已经存在并可用的 insight。问题是：Postgres 高并发下 lock timeout 怎么排查？如果有，请只根据那条 insight 用非常简单的中文输出 3 行：问题现象、正确步骤、常见误区。不要补充额外背景。如果没有，请明确说没有，不要编造。无论有没有 insight，第一行都必须正好写 case-answer。"
 
 capture_pane() {
   tmux capture-pane -pt "${SESSION}:0" -S -500
@@ -45,11 +46,13 @@ send_literal() {
 
 rm -rf "${SOURCE_CLONE}" "${WORKSPACE}"
 git clone --depth 1 "${REPO_URL}" "${SOURCE_CLONE}"
-mkdir -p "${WORKSPACE}"
+mkdir -p "${WORKSPACE}/skills/insights-wiki" "${WORKSPACE}/wiki/database"
 cp "${SOURCE_CLONE}/prompt.md" "${WORKSPACE}/prompt.md"
+cp "${SOURCE_CLONE}/skills/insights-wiki/SKILL.md" "${WORKSPACE}/skills/insights-wiki/SKILL.md"
+cp "${SOURCE_CLONE}/demos/insights-share/demo_codes/wiki/database/postgres-concurrency.md" "${WORKSPACE}/wiki/database/postgres-concurrency.md"
 
 tmux kill-session -t "${SESSION}" 2>/dev/null || true
-tmux new-session -d -s "${SESSION}" -c "${WORKSPACE}" "claude"
+tmux new-session -d -s "${SESSION}" -c "${WORKSPACE}" "claude --model haiku"
 
 first_screen="$(wait_for_any 45 "Yes, I trust this folder" "❯")"
 if [[ "${first_screen}" == "Yes, I trust this folder" ]]; then
@@ -59,16 +62,13 @@ fi
 sleep 2
 
 send_literal "! pwd && find . -maxdepth 4 -type f | sort"
-wait_for_any 30 "./prompt.md" "Only one file found" >/dev/null
-
-send_literal "! pwd && mkdir -p skills/insights-wiki wiki/database && cp ${SOURCE_CLONE}/skills/insights-wiki/SKILL.md skills/insights-wiki/SKILL.md && cp ${SOURCE_CLONE}/demos/insights-share/demo_codes/wiki/database/postgres-concurrency.md wiki/database/postgres-concurrency.md && find . -maxdepth 5 -type f | sort"
 wait_for_any 30 "./skills/insights-wiki/SKILL.md" "./wiki/database/postgres-concurrency.md" >/dev/null
 
 send_literal "请用非常简单的中文回答，并且第一行必须正好写 first-setup-guide。告诉一个非技术新用户：这个临时 workspace 从零开始安装了 client skill 和第一条可复用 shared insight 以后，现在能做什么。最多 4 条。"
 wait_for_any 120 "⏺ first-setup-guide" >/dev/null
 
-send_literal "这是 with-skill 版本。请基于这个 workspace 当前已有的内容以及已经安装好的 client skill，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 with-case。"
-wait_for_any 120 "⏺ with-case" >/dev/null
+send_literal "${FINAL_QUERY}"
+wait_for_any 120 "⏺ case-answer" >/dev/null
 
 send_literal "/export ${EXPORT_FILE}"
 wait_for_any 60 "Conversation exported to:" >/dev/null

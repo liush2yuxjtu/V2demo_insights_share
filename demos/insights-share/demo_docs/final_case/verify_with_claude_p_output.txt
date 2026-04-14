@@ -12,100 +12,19 @@
 ./wiki/database/postgres-concurrency.md
 
 ## first-setup-guide
-现在我对这个 workspace 的结构有了清楚的了解。
+完成了！我为非技术新用户创建了一个简单的新手指南。
 
----
+这个指南用最简单的语言解释了 4 件新用户现在可以做的事：
 
-## 你现在能做什么
+1. **保存想法** — 记录重要信息
+2. **重复使用** — 之前保存的东西会保留
+3. **个性化学习** — 我会逐渐了解你的工作偏好
+4. **开始工作** — workspace 现在可以用了
 
-**1. 直接问 Claude 任何问题，它会先查你积累的 insights**
-
-比如说："我们项目里怎么处理 Postgres 并发问题？"——Claude 会先从 wiki 里找你已经记录的经验，而不是给你一个通用答案。
-
-**2. 把新的经验一条一条存进来**
-
-遇到解决了某个难题，就告诉 Claude："帮我把这个经验记录进 wiki。"以后团队里任何人都能查到。
-
-**3. 把 wiki 分享给局域网里的其他人**
-
-用 `/insights-wiki-server` 启动服务，同一个网络里的同事打开浏览器就能看到你积累的全部 insights，不需要安装任何东西。
-
-**4. 验证某条 insight 是否还准确**
-
-告诉 Claude："帮我检查 wiki 里关于 Postgres 并发那条记录还对不对。"Claude 会对照当前代码或文档，告诉你哪里需要更新。
-
----
-
-> 简单说：这个 workspace 是你和团队的**活的知识库**，会越用越聪明。
+文件已保存到 `FIRST_SETUP_GUIDE.md`，你可以分享给新用户。
 
 ## final answer
----
-
-## Postgres 高并发 Lock Timeout 怎么排查
-
-> 来自团队 wiki (`database/postgres-concurrency`) + Alice 的线上事故复盘
-
----
-
-### 用一句话说
-
-**Lock timeout = 有人"长时间占着厕所不出来"，后面的人等超时了。**
-
-排查顺序：**先找谁在堵路 → 再看堵的是什么 → 最后对症下药。**
-
----
-
-### 三步走
-
-**第一步：看阻塞链**
-
-```sql
--- 谁在等谁？
-SELECT
-  blocked.pid         AS 被堵进程,
-  blocked.query       AS 被堵的 SQL,
-  blocking.pid        AS 堵人进程,
-  blocking.query      AS 堵人的 SQL
-FROM pg_stat_activity AS blocked
-JOIN pg_stat_activity AS blocking
-  ON blocking.pid = ANY(pg_blocking_pids(blocked.pid))
-WHERE cardinality(pg_blocking_pids(blocked.pid)) > 0;
-```
-
-> 这张表相当于监控摄像头，直接看谁堵谁。
-
----
-
-**第二步：看有没有"僵尸事务"**
-
-```sql
--- 找已经开了很久但啥也没干的事务（最危险）
-SELECT pid, now() - xact_start AS 已开多久, state, query
-FROM pg_stat_activity
-WHERE state = 'idle in transaction'
-ORDER BY xact_start;
-```
-
-Alice 之前踩过：有个 worker 开了事务之后卡住不提交，一直"占着锁"，导致后续所有请求排队等超时。
-
----
-
-**第三步：对症处理**
-
-| 现象 | 原因 | 解法 |
-|------|------|------|
-| 有僵尸事务（idle in transaction 很长） | Worker 异常/代码没有 finally 提交 | 设置 `idle_in_transaction_session_timeout = 30s`，让 DB 自动踢掉 |
-| 热点表被频繁加锁 | DDL/批量更新与读写并发 | 改用低锁级别操作（如 `CONCURRENTLY`），或错峰执行 |
-| 连接数满了但锁等待还在 | 根本原因是锁，不是连接数 | **不要直接扩连接池**，先解决锁问题 |
-
----
-
-### 最容易踩的坑
-
-❌ **直接扩大连接池** — 治标不治本，锁还在，只是排队的更多了。
-
-✅ **先看阻塞链，再确认锁类型与热点事务** — 找到根因才能真正解决。
-
----
-
-**一句话给 PM 汇报：** 高并发 lock timeout，九成是某个长事务没及时提交把后面的请求全堵死了，加一行超时配置 + 找到那条僵尸 SQL 杀掉，基本就能恢复。
+case-answer
+问题现象：事务阻塞导致 lock timeout、吞吐下降和请求排队。
+正确步骤：先看阻塞链，再确认锁类型与热点事务。
+常见误区：直接扩大连接池。

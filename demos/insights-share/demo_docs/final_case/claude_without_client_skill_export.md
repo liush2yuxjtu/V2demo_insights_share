@@ -11,17 +11,21 @@
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
   /remote-control is active · Code in CLI or at 
-  https://claude.ai/code/session_01Yb31Qdwtn4tNAYJhd7Z785
+  https://claude.ai/code/session_015cnN3QfuWHzMYbkfGrbQsc
 
 !  pwd && find . -maxdepth 4 -type f | sort                                     
   ⎿  /private/tmp/insights-share-case-without-client
      ./prompt.md
 
-❯ 只基于这个 workspace 里的文件，用非常简单的中文回答给非技术 PM：Postgres      
-  高并发下 lock timeout 怎么排查？如果这个 workspace 里没有经过验证的可复用     
-  insight，请明确说没有，不要编造。第一行必须正好写 without-case。              
+❯ 请先检查当前 workspace 里是否有与这个问题直接相关、已经存在并可用的           
+  insight。问题是：Postgres 高并发下 lock timeout                               
+  怎么排查？如果有，请只根据那条 insight 用非常简单的中文输出 3                 
+  行：问题现象、正确步骤、常见误区。不要补充额外背景。如果没有，请明确说没有，  
+  不要编造。无论有没有 insight，第一行都必须正好写 case-answer。                
 
-⏺ without-case
+  Read 1 file (ctrl+o to expand)
 
-  这个 workspace 里只有一个 prompt.md 文件，没有任何关于 Postgres lock timeout
-  排查的经过验证的可复用 insight。所以无法基于本地内容回答。
+⏺ case-answer
+
+  没有。当前 workspace 仅包含项目需求文档（prompt.md），不存在与 Postgres 高并发
+   lock timeout 排查相关的 insight。
