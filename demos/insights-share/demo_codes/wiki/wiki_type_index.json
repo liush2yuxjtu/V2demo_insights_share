@@ -1,0 +1,12 @@
+{
+  "types": [
+    {
+      "name": "agent",
+      "index": "agent/INDEX.md"
+    },
+    {
+      "name": "database",
+      "index": "database/INDEX.md"
+    }
+  ]
+}

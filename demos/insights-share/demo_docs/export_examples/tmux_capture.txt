@@ -1,0 +1,24 @@
+ ▐▛███▜▌   Claude Code v2.1.104
+▝▜█████▛▘  MiniMax-M2.7-highspeed with max effort · API Usage Billing
+  ▘▘ ▝▝    ~/projects/V2demo_insights_share
+
+❯ /export
+demos/insights-share/demo_docs/export_examples/claude_session_export.md
+  ⎿  Conversation exported to: /Users/m1/projects/V2demo_insights_share/demos/in
+     sights-share/demo_docs/export_examples/claude_session_export.md
+
+────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────
+  MiniMax-M2.7-highspeed | ctx:null% | /Users/m1/projects/V2demo_insights_sha…
+                                                                      0 tokens
+
+
+
+
+
+
+
+
+
+

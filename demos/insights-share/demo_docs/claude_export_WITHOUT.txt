@@ -1,0 +1,35 @@
+[report]
+name=claude_export_WITHOUT
+source=prompt.md section 5
+scope=未接入 demo 的基线路径
+status=report_ready
+workspace=/private/tmp/insights-share-without
+
+[prompt_mapping]
+requirement_1=分别演示未接入 demo 与接入 demo 两种情况
+requirement_2=从命令与会话开始记录
+requirement_3=导出为可展示 txt 资产
+requirement_4=WITHOUT case 代表没有 skills 的基线
+
+[workspace_files]
+claude_md=/private/tmp/insights-share-without/CLAUDE.md
+prompt_md=/private/tmp/insights-share-without/prompt.md
+skills_absent=true
+
+[observed_cli_flow]
+baseline_command=python3 -m insights_share.cli insights-wiki --question "Postgres 高并发下 lock timeout 怎么排查" --baseline --print-json
+is
+[baseline_output]
+{
+  "triggered": false,
+  "matches": [],
+  "injection": "",
+  "reason": "insight_disabled",
+  "mode": "WITHOUT_SHARED_INSIGHT",
+  "question": "Postgres 高并发下 lock timeout 怎么排查"
+}
+
+[assessment]
+result=符合 prompt.md 对 WITHOUT 基线路径的要求
+evidence=基线命令和完整输出都已经内嵌在本文件里，可直接与 WITH 对照
+gap=如果需要展示真实用户终端记录，可以单独再录一条 without 会话

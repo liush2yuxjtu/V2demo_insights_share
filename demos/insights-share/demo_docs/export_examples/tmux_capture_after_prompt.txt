@@ -1,0 +1,133 @@
+ ▐▛███▜▌   Claude Code v2.1.104
+▝▜█████▛▘  MiniMax-M2.7-highspeed with max effort · API Usage Billing
+  ▘▘ ▝▝    ~/projects/V2demo_insights_share
+
+❯ /export
+demos/insights-share/demo_docs/export_examples/claude_session_export.md
+  ⎿  Conversation exported to: /Users/m1/projects/V2demo_insights_share/demos/in
+     sights-share/demo_docs/export_examples/claude_session_export.md
+
+❯ Summarize the current repo in one short sentence.
+
+∴ Thinking…
+
+  The user wants me to summarize the current repository in one short sentence.
+  Let me look at the repo structure to understand what it's about.
+
+⏺ Search(pattern: "*")
+  ⎿  Found 87 files
+     .git/info/exclude
+     .git/description
+     .git/hooks/commit-msg.sample
+     .git/hooks/pre-rebase.sample
+     .git/hooks/sendemail-validate.sample
+     .git/hooks/pre-commit.sample
+     .git/hooks/applypatch-msg.sample
+     .git/hooks/fsmonitor-watchman.sample
+     .git/hooks/pre-receive.sample
+     .git/hooks/prepare-commit-msg.sample
+     .git/hooks/post-update.sample
+     .git/hooks/pre-merge-commit.sample
+     .git/hooks/pre-applypatch.sample
+     .git/hooks/pre-push.sample
+     .git/hooks/update.sample
+     .git/hooks/push-to-checkout.sample
+     .git/config
+     .git/HEAD
+     .git/objects/ae/9ca84a604a79263dc2a17c617f30ce637f0371
+     .git/objects/68/c4c039ccb7845f275207cf6901c403245de5d2
+     .git/index
+     .git/COMMIT_EDITMSG
+     .git/objects/7c/66b9e8a04d2378466607d1aae26fce81531951
+     .git/refs/heads/main
+     .git/logs/HEAD
+     .git/logs/refs/heads/main
+     pyproject.toml
+     tests/test_wiki_store.py
+     tests/test_retrieval.py
+     insights_share/__init__.py
+     insights_share/wiki_store.py
+     insights_share/server.py
+     bin/insights-wiki
+     bin/insights-wiki-server
+     insights_share/evaluation.py
+     tests/test_evaluation.py
+     demos/insights-share/demo_codes/fixtures/trigger_cases.json
+     demos/insights-share/demo_docs/design.md
+     demos/insights-share/demo_docs/proposal_linear.html
+     demos/insights-share/demo_docs/export_template.txt
+     demos/insights-share/demo_codes/demo_runner/bootstrap_demo.py
+     demos/insights-share/demo_codes/demo_runner/run_validation.py
+     demos/insights-share/demo_codes/wiki/database/postgres-concurrency.md
+     demos/insights-share/demo_codes/wiki/database/raw_logs/postgres-postgres-co
+     ncurrency-session.jsonl
+     demos/insights-share/demo_codes/wiki/database/postgres-io.md
+     demos/insights-share/demo_codes/wiki/database/raw_logs/postgres-postgres-io
+     .txt
+     demos/insights-share/demo_codes/wiki/agent/context-injection-boundary.md
+     demos/insights-share/demo_codes/wiki/agent/raw_logs/agent-context-injection
+     .txt
+     demos/insights-share/demo_codes/wiki/agent/with-without-demo-method.md
+     demos/insights-share/demo_codes/wiki/agent/raw_logs/agent-with-without-demo
+     .txt
+     demos/insights-share/demo_codes/wiki/database/postgres-memory.md
+     demos/insights-share/demo_codes/wiki/database/raw_logs/postgres-postgres-me
+     mory.txt
+     demos/insights-share/demo_codes/wiki/agent/INDEX.md
+     demos/insights-share/demo_codes/wiki/database/INDEX.md
+     demos/insights-share/demo_codes/wiki/wiki_type_index.json
+     insights_share/retrieval.py
+     insights_share/client.py
+     insights_share/cli.py
+     tests/test_server_client_flow.py
+     .git/gk/config
+     skills/insights-wiki/SKILL.md
+     skills/insights-wiki-server/SKILL.md
+     .gitignore
+     demos/insights-share/demo_docs/server_host_export.txt
+     demos/insights-share/demo_docs/claude_export_WITH.txt
+     demos/insights-share/demo_docs/claude_export_WITHOUT.txt
+     demos/insights-share/demo_docs/wiki_upload.txt
+     insights_share/__pycache__/__init__.cpython-312.pyc
+     insights_share/__pycache__/cli.cpython-312.pyc
+     insights_share/__pycache__/client.cpython-312.pyc
+     insights_share/__pycache__/server.cpython-312.pyc
+     insights_share/__pycache__/retrieval.cpython-312.pyc
+     insights_share/__pycache__/wiki_store.cpython-312.pyc
+     tests/__pycache__/test_evaluation.cpython-312-pytest-9.0.2.pyc
+     insights_share/__pycache__/evaluation.cpython-312.pyc
+     tests/__pycache__/test_retrieval.cpython-312-pytest-9.0.2.pyc
+     tests/__pycache__/test_server_client_flow.cpython-312-pytest-9.0.2.pyc
+     tests/__pycache__/test_wiki_store.cpython-312-pytest-9.0.2.pyc
+     .pytest_cache/README.md
+     .pytest_cache/.gitignore
+     .pytest_cache/CACHEDIR.TAG
+     .pytest_cache/v/cache/nodeids
+     demos/insights-share/demo_docs/validation_linear.html
+     prompt.md
+     export_examples.md
+∴ Thinking…insights-share/demo_docs/export_examples/claude_session_export.md
+     demos/insights-share/demo_docs/export_examples/tmux_capture.txt
+  Based on the repo structure, this looks like an "insights-share" or
+  "insights-wiki" system. It has a server, client, wiki store, retrieval,
+  evaluation, and CLI components. It seems to be a system for managing and
+  sharing insights/knowledge with wiki-like features, including database and
+  agent-related demo content.
+
+  Let me provide a brief summary.
+
+⏺ A knowledge-sharing wiki system with retrieval, evaluation, and CLI tools for
+  managing and accessing structured insights.
+
+❯ /export demos/insights-share/demo_docs/export_examples/claude_session_after_p
+rompt_export.md
+  ⎿  Conversation exported to:
+     /Users/m1/projects/V2demo_insights_share/demos/insights-share/demo_docs/exp
+     ort_examples/claude_session_after_prompt_export.md
+
+────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────
+  MiniMax-M2.7-highspeed | ctx:79% | /Users/m1/projects/V2demo_insights_share…
+                                                                  42032 tokens
+

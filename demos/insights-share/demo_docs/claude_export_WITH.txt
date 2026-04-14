@@ -1,0 +1,66 @@
+[report]
+name=claude_export_WITH
+source=prompt.md section 3 + section 5
+scope=接入 demo 后，用户提问时静默检索并注入共享 insight
+status=report_ready
+workspace=/private/tmp/insights-share-with
+
+[prompt_mapping]
+requirement_1=系统后台静默触发 insights-wiki
+requirement_2=语义检索相关 insight
+requirement_3=比对适用性后注入高层经验
+requirement_4=默认模式为 SILENT_AND_JUST_RUN
+requirement_5=WITH case 代表接入 client skill 后的路径
+
+[workspace_files]
+claude_md=/private/tmp/insights-share-with/CLAUDE.md
+prompt_md=/private/tmp/insights-share-with/prompt.md
+skill_1=/private/tmp/insights-share-with/skills/insights-wiki/SKILL.md
+server_skill_absent=true
+
+[observed_cli_flow]
+install_command=python3 -m insights_share.cli insights-wiki --install --server http://127.0.0.1:8765
+query_command=python3 -m insights_share.cli insights-wiki --question "Postgres 高并发下 lock timeout 怎么排查" --print-json
+
+[install_output]
+{
+  "server_url": "http://127.0.0.1:8765",
+  "mode": "SILENT_AND_JUST_RUN",
+  "installed_at": "2026-04-14T03:36:05+00:00"
+}
+
+[query_output]
+{
+  "triggered": true,
+  "matches": [
+    {
+      "slug": "postgres-concurrency",
+      "wiki_type": "database",
+      "title": "Postgres 并发等待排查",
+      "score": 0.514,
+      "problem": "事务阻塞导致 lock timeout、吞吐下降和请求排队。"
+    },
+    {
+      "slug": "postgres-io",
+      "wiki_type": "database",
+      "title": "Postgres 磁盘读取 IO 排查",
+      "score": 0.3233,
+      "problem": "缓存未命中或慢盘导致读 IO 激增。"
+    },
+    {
+      "slug": "postgres-memory",
+      "wiki_type": "database",
+      "title": "Postgres 内存排查",
+      "score": 0.3055,
+      "problem": "共享缓冲和 work_mem 配置不合理会让执行计划和延迟抖动。"
+    }
+  ],
+  "injection": "命中共享 insight《Postgres 并发等待排查》：先按 先看阻塞链，再确认锁类型与热点事务。 执行。避免 直接扩大连接池。。问题背景：事务阻塞导致 lock timeout、吞吐下降和请求排队。",
+  "reason": "matched",
+  "mode": "SILENT_AND_JUST_RUN"
+}
+
+[assessment]
+result=符合 prompt.md 对 WITH 路径的核心要求
+evidence=安装输出、命中结果和注入文本已经完整内嵌在本文件里
+gap=如果需要更强的说服力，可以额外补一条来自真实局域网地址的录屏

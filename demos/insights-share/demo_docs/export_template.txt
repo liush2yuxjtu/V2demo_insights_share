@@ -1,0 +1,15 @@
+[session_start]
+tmux_session=
+command=
+timestamp=
+
+[inputs]
+question=
+
+[outputs]
+stdout=
+stderr=
+
+[notes]
+expected_behavior=
+actual_behavior=

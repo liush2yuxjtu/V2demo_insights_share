@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>validation_linear</title>
+    <style>
+      body { font-family: Georgia, serif; margin: 32px; background: #f7f3e8; color: #1d252a; }
+      table { width: 100%; border-collapse: collapse; background: #fff; }
+      th, td { border: 1px solid #d9cfb5; padding: 8px 10px; text-align: left; }
+      th { background: #efe6d1; }
+      .hero { margin-bottom: 24px; }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <h1>insights-share validation</h1>
+      <p>总用例 20，通过 20，accuracy 1.0</p>
+      <p>trigger recall 1.0，non-trigger accuracy 1.0</p>
+    </section>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>split</th><th>should trigger</th><th>triggered</th><th>expected</th><th>predicted</th><th>result</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>train-01</td><td>train</td><td>Y</td><td>Y</td><td>postgres-concurrency</td><td>postgres-concurrency</td><td>PASS</td></tr>
+<tr><td>train-02</td><td>train</td><td>Y</td><td>Y</td><td>postgres-concurrency</td><td>postgres-concurrency</td><td>PASS</td></tr>
+<tr><td>train-03</td><td>train</td><td>Y</td><td>Y</td><td>postgres-io</td><td>postgres-io</td><td>PASS</td></tr>
+<tr><td>train-04</td><td>train</td><td>Y</td><td>Y</td><td>context-injection-boundary</td><td>context-injection-boundary</td><td>PASS</td></tr>
+<tr><td>train-05</td><td>train</td><td>Y</td><td>Y</td><td>with-without-demo-method</td><td>with-without-demo-method</td><td>PASS</td></tr>
+<tr><td>train-06</td><td>train</td><td>Y</td><td>Y</td><td>postgres-concurrency</td><td>postgres-concurrency</td><td>PASS</td></tr>
+<tr><td>train-07</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>train-08</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>train-09</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>train-10</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>train-11</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>train-12</td><td>train</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>test-01</td><td>test</td><td>Y</td><td>Y</td><td>postgres-concurrency</td><td>postgres-concurrency</td><td>PASS</td></tr>
+<tr><td>test-02</td><td>test</td><td>Y</td><td>Y</td><td>postgres-io</td><td>postgres-io</td><td>PASS</td></tr>
+<tr><td>test-03</td><td>test</td><td>Y</td><td>Y</td><td>context-injection-boundary</td><td>context-injection-boundary</td><td>PASS</td></tr>
+<tr><td>test-04</td><td>test</td><td>Y</td><td>Y</td><td>with-without-demo-method</td><td>with-without-demo-method</td><td>PASS</td></tr>
+<tr><td>test-05</td><td>test</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>test-06</td><td>test</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>test-07</td><td>test</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+<tr><td>test-08</td><td>test</td><td>N</td><td>N</td><td>-</td><td>-</td><td>PASS</td></tr>
+      </tbody>
+    </table>
+  </body>
+</html>

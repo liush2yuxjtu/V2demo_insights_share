@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>proposal_linear</title>
+    <style>
+      body { font-family: Georgia, serif; margin: 0; color: #182126; background: #f4f1e8; }
+      main { max-width: 980px; margin: 0 auto; padding: 48px 20px 80px; }
+      section { margin-bottom: 42px; }
+      .hero { padding: 28px; border-radius: 28px; background: linear-gradient(135deg, #fff8e8, #e9ddc7); }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+      .card { background: rgba(255,255,255,0.8); border: 1px solid #d7ccaf; border-radius: 18px; padding: 18px; }
+      code { font-family: Menlo, monospace; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p>CLI-first / LAN / hot reload / silent retrieval</p>
+        <h1>insights-share proposal</h1>
+        <p>把个人 insight 升级成团队可共享的 wiki skill。服务端负责托管与管理，客户端只做连接和静默注入。</p>
+      </section>
+      <section>
+        <h2>解决什么问题</h2>
+        <div class="grid">
+          <div class="card">生成 insight 很慢，用户不想每次重造经验。</div>
+          <div class="card">团队共享时不能直接复制他人的上下文，需要高层经验的热加载。</div>
+          <div class="card">用户不想手动管理 insight，应该在后台无感检索。</div>
+        </div>
+      </section>
+      <section>
+        <h2>系统组成</h2>
+        <div class="grid">
+          <div class="card"><strong>insights-wiki-server</strong><br />局域网托管、管理 UI、CRUD、热加载、检索 API。</div>
+          <div class="card"><strong>insights-wiki</strong><br />安装连接、静默检索、上下文注入、with/without 对比。</div>
+          <div class="card"><strong>wiki 四层结构</strong><br />type index / INDEX.md / item.md / raw logs。</div>
+        </div>
+      </section>
+      <section>
+        <h2>验证方式</h2>
+        <p>用 20 个用例做触发率验证，同时录制 without 和 with 两条证据链，最终产出 HTML、导出文本和 server/wiki 操作记录。</p>
+        <p>建议命令：</p>
+        <pre><code>python3 demos/insights-share/demo_codes/demo_runner/bootstrap_demo.py
+python3 -m insights_share.cli insights-wiki-server --start --ui --seed-demo
+python3 -m insights_share.cli insights-wiki --install --server http://127.0.0.1:8765
+python3 -m insights_share.cli insights-wiki --question "Postgres 高并发下 lock timeout 怎么排查"</code></pre>
+      </section>
+    </main>
+  </body>
+</html>

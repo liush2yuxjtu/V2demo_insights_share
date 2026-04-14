@@ -1,0 +1,32 @@
+[report]
+name=server_host_export
+source=prompt.md section 1 + section 5
+scope=局域网 server 启动、dashboard 暴露、会话导出证据
+status=report_ready
+
+[observed_server_flow]
+bootstrap_command=python3 demos/insights-share/demo_codes/demo_runner/bootstrap_demo.py
+server_command=python3 -m insights_share.cli insights-wiki-server --start --ui --seed-demo --host 127.0.0.1 --port 8765
+
+[bootstrap_output]
+seeded demo wiki at /Users/m1/projects/V2demo_insights_share/demos/insights-share/demo_codes/wiki
+
+[server_output]
+dashboard: http://127.0.0.1:8765/ui
+server listening on http://127.0.0.1:8765
+
+[retained_evidence]
+wiki_root=/Users/m1/projects/V2demo_insights_share/demos/insights-share/demo_codes/wiki
+dashboard_route=http://127.0.0.1:8765/ui
+health_route=http://127.0.0.1:8765/health
+
+[prompt_mapping]
+requirement_1=insights-wiki-server --start
+requirement_2=insights-wiki-server --ui
+requirement_3=服务在局域网内可访问
+requirement_4=需要完整展示材料
+
+[assessment]
+result=server 启动、dashboard 地址、demo wiki 预置都已生成
+evidence=仓库内保留了可直接启动的 wiki、dashboard 路径和命令
+gap=当前示例仍使用 127.0.0.1；同网段演示时可把 --host 改成实际局域网 IP

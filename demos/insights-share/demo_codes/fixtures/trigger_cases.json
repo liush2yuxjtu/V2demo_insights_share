@@ -1,0 +1,164 @@
+{
+  "cases": [
+    {
+      "case_id": "train-01",
+      "split": "train",
+      "should_trigger": true,
+      "question": "Postgres 高并发下 lock timeout 怎么排查",
+      "expected_slug": "postgres-concurrency",
+      "note": "数据库并发阻塞"
+    },
+    {
+      "case_id": "train-02",
+      "split": "train",
+      "should_trigger": true,
+      "question": "pg_locks 一直涨，接口开始排队，该先看哪里",
+      "expected_slug": "postgres-concurrency",
+      "note": "并发等待的变体"
+    },
+    {
+      "case_id": "train-03",
+      "split": "train",
+      "should_trigger": true,
+      "question": "read io 飙高，shared buffers miss 也高，怎么判断是缓存未命中还是慢盘",
+      "expected_slug": "postgres-io",
+      "note": "IO 排查"
+    },
+    {
+      "case_id": "train-04",
+      "split": "train",
+      "should_trigger": true,
+      "question": "把整段日志直接塞给 agent 导致上下文变得很乱，有什么共享 insight",
+      "expected_slug": "context-injection-boundary",
+      "note": "注入边界"
+    },
+    {
+      "case_id": "train-05",
+      "split": "train",
+      "should_trigger": true,
+      "question": "validation 要给 PM 看，只有接入后的链路够吗",
+      "expected_slug": "with-without-demo-method",
+      "note": "with/without 基线"
+    },
+    {
+      "case_id": "train-06",
+      "split": "train",
+      "should_trigger": true,
+      "question": "出现事务阻塞和 lock timeout，不想误扩连接池，先看什么",
+      "expected_slug": "postgres-concurrency",
+      "note": "并发排查正例"
+    },
+    {
+      "case_id": "train-07",
+      "split": "train",
+      "should_trigger": false,
+      "question": "团队周会的主持流程怎么优化",
+      "expected_slug": null,
+      "note": "非技术管理话题"
+    },
+    {
+      "case_id": "train-08",
+      "split": "train",
+      "should_trigger": false,
+      "question": "怎么写产品发布邮件",
+      "expected_slug": null,
+      "note": "营销文案"
+    },
+    {
+      "case_id": "train-09",
+      "split": "train",
+      "should_trigger": false,
+      "question": "iOS 启动页字体想更高级一点，有什么建议",
+      "expected_slug": null,
+      "note": "无匹配 wiki"
+    },
+    {
+      "case_id": "train-10",
+      "split": "train",
+      "should_trigger": false,
+      "question": "公司团建去哪儿比较好",
+      "expected_slug": null,
+      "note": "日常行政"
+    },
+    {
+      "case_id": "train-11",
+      "split": "train",
+      "should_trigger": false,
+      "question": "预算表怎么做同比分析",
+      "expected_slug": null,
+      "note": "财务分析"
+    },
+    {
+      "case_id": "train-12",
+      "split": "train",
+      "should_trigger": false,
+      "question": "这个 logo 的绿色要不要再亮一点",
+      "expected_slug": null,
+      "note": "视觉评审"
+    },
+    {
+      "case_id": "test-01",
+      "split": "test",
+      "should_trigger": true,
+      "question": "Postgres 事务排队，用户请求超时，shared insight 会建议先看什么",
+      "expected_slug": "postgres-concurrency",
+      "note": "测试集并发排查"
+    },
+    {
+      "case_id": "test-02",
+      "split": "test",
+      "should_trigger": true,
+      "question": "磁盘读取 IOPS 爆了，但不确定是不是缓存没打中，应该按哪个 insight 排查",
+      "expected_slug": "postgres-io",
+      "note": "测试集 IO 排查"
+    },
+    {
+      "case_id": "test-03",
+      "split": "test",
+      "should_trigger": true,
+      "question": "共享 insight 注入以后上下文太吵，应该保留什么不保留什么",
+      "expected_slug": "context-injection-boundary",
+      "note": "测试集注入边界"
+    },
+    {
+      "case_id": "test-04",
+      "split": "test",
+      "should_trigger": true,
+      "question": "给 PM 演示共享 insight，为什么必须保留 without 基线",
+      "expected_slug": "with-without-demo-method",
+      "note": "测试集展示方法"
+    },
+    {
+      "case_id": "test-05",
+      "split": "test",
+      "should_trigger": false,
+      "question": "简历里的自我介绍要怎么写",
+      "expected_slug": null,
+      "note": "测试集非技术话题"
+    },
+    {
+      "case_id": "test-06",
+      "split": "test",
+      "should_trigger": false,
+      "question": "晚饭吃火锅还是烧烤",
+      "expected_slug": null,
+      "note": "测试集日常话题"
+    },
+    {
+      "case_id": "test-07",
+      "split": "test",
+      "should_trigger": false,
+      "question": "怎么做英语口语练习计划",
+      "expected_slug": null,
+      "note": "测试集学习计划"
+    },
+    {
+      "case_id": "test-08",
+      "split": "test",
+      "should_trigger": false,
+      "question": "面向 C 端的定价页应该先放什么模块",
+      "expected_slug": null,
+      "note": "测试集产品营销"
+    }
+  ]
+}

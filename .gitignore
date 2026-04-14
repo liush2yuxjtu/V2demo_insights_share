@@ -1,0 +1,5 @@
+.DS_Store
+__pycache__/
+.pytest_cache/
+.insights-share/
+demos/insights-share/demo_docs/validation_report.json
