@@ -64,9 +64,6 @@ sleep 2
 send_literal "! pwd && find . -maxdepth 4 -type f | sort"
 wait_for_any 30 "./skills/insights-wiki/SKILL.md" "./wiki/database/postgres-concurrency.md" >/dev/null
 
-send_literal "请用非常简单的中文回答，并且第一行必须正好写 first-setup-guide。告诉一个非技术新用户：这个临时 workspace 从零开始安装了 client skill 和第一条可复用 shared insight 以后，现在能做什么。最多 4 条。"
-wait_for_any 120 "⏺ first-setup-guide" >/dev/null
-
 send_literal "${FINAL_QUERY}"
 wait_for_any 120 "⏺ case-answer" >/dev/null
 
