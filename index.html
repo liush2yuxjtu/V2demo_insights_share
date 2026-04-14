@@ -367,6 +367,67 @@
       <section class="section">
         <div class="section-head">
           <div>
+            <h2>Install By Copy-Paste</h2>
+            <p>不需要自己拼步骤。这里直接给你两种复制即用方式：一份贴进 terminal，一份贴进 Claude Code。</p>
+          </div>
+        </div>
+        <div class="surface prompt-layout">
+          <div class="prompt-main">
+            <div class="kicker">Terminal Install</div>
+            <div class="copy-block">
+              <div class="copy-row">
+                <p>最直接的安装方式。clone 仓库后，连续跑 `without` 和 `with` 两个验证脚本。</p>
+                <button class="copy-btn" data-copy-target="install-terminal">Copy Terminal</button>
+              </div>
+              <pre id="install-terminal">git clone https://github.com/liush2yuxjtu/V2demo_insights_share.git
+cd V2demo_insights_share
+./demos/insights-share/demo_docs/final_case/verify_without_claude_p.sh
+./demos/insights-share/demo_docs/final_case/verify_with_claude_p.sh</pre>
+            </div>
+
+            <div class="copy-block">
+              <div class="copy-row">
+                <p>如果你想让 Claude Code 代你安装和验证，就把下面整段 prompt 直接贴进去。</p>
+                <button class="copy-btn" data-copy-target="install-claude">Copy Claude Prompt</button>
+              </div>
+              <pre id="install-claude">请帮我安装并验证这个 demo。
+
+1. git clone https://github.com/liush2yuxjtu/V2demo_insights_share.git
+2. 进入仓库目录
+3. 先运行：
+   ./demos/insights-share/demo_docs/final_case/verify_without_claude_p.sh
+4. 再运行：
+   ./demos/insights-share/demo_docs/final_case/verify_with_claude_p.sh
+5. 最后告诉我：
+   - 两次测试是不是同一个 init prompt
+   - without 的结果为什么差
+   - with 的结果为什么更好</pre>
+            </div>
+          </div>
+
+          <aside class="prompt-side">
+            <div class="kicker">Install Docs</div>
+            <div class="side-links" style="margin-top: 18px">
+              <a href="INSTALL.md">
+                <strong>INSTALL.md</strong>
+                <span>仓库内的正式安装说明，包含 terminal、Claude Code、tmux 三种复制即用入口。</span>
+              </a>
+              <a href="demos/insights-share/demo_docs/final_case/verify_without_claude_p.sh">
+                <strong>verify_without_claude_p.sh</strong>
+                <span>复制即跑的 `without` 安装后验证脚本。</span>
+              </a>
+              <a href="demos/insights-share/demo_docs/final_case/verify_with_claude_p.sh">
+                <strong>verify_with_claude_p.sh</strong>
+                <span>复制即跑的 `with` 安装后验证脚本。</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
             <h2>Copy And Run</h2>
             <p>这里放的是最值得复制的内容：稳定 A/B 共用 prompt、两条可直接在终端执行的验证命令，以及两条完整的复现实验脚本。</p>
           </div>
