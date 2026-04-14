@@ -1,0 +1,17 @@
+## Setup
+- fresh git clone: https://github.com/liush2yuxjtu/V2demo_insights_share.git
+- kept only prompt.md in the temp workspace
+- no client skill installed
+
+## pwd
+/private/tmp/insights-share-verify-without
+
+## file tree
+./prompt.md
+
+## final answer
+当前工作区里**没有**关于 Postgres 高并发 lock timeout 排查的经过验证的可复用 insight。
+
+工作区只有一个 `prompt.md`，内容是关于如何构建"团队共享 insights 的 wiki demo"这个项目的需求文档，和 Postgres 排查无关。
+
+如果你需要这方面的 insight，可以先通过该系统积累和验证后再使用，而不是现在直接编造一个。
