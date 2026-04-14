@@ -61,7 +61,7 @@ sleep 2
 send_literal "! pwd && find . -maxdepth 4 -type f | sort"
 wait_for_any 30 "./prompt.md" "Only one file found" >/dev/null
 
-send_literal "只基于这个 workspace 里的文件，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这个 workspace 里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 without-case。"
+send_literal "这是 without-skill 版本。只根据这个 workspace 当前已有的内容，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 without-case。"
 wait_for_any 120 "⏺ without-case" >/dev/null
 
 send_literal "/export ${EXPORT_FILE}"

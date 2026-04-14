@@ -67,7 +67,7 @@ wait_for_any 30 "./skills/insights-wiki/SKILL.md" "./wiki/database/postgres-conc
 send_literal "请用非常简单的中文回答，并且第一行必须正好写 first-setup-guide。告诉一个非技术新用户：这个临时 workspace 从零开始安装了 client skill 和第一条可复用 shared insight 以后，现在能做什么。最多 4 条。"
 wait_for_any 120 "⏺ first-setup-guide" >/dev/null
 
-send_literal "只基于这个 workspace 里的文件，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这个 workspace 里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 with-case。"
+send_literal "这是 with-skill 版本。请基于这个 workspace 当前已有的内容以及已经安装好的 client skill，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这里没有经过验证的可复用 insight，请明确说没有，不要编造。第一行必须正好写 with-case。"
 wait_for_any 120 "⏺ with-case" >/dev/null
 
 send_literal "/export ${EXPORT_FILE}"

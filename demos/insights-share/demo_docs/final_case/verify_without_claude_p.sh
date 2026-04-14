@@ -11,4 +11,14 @@ mkdir -p "${WORKSPACE}"
 cp "${SOURCE_DIR}/prompt.md" "${WORKSPACE}/prompt.md"
 
 cd "${WORKSPACE}"
-claude -p --dangerously-skip-permissions --add-dir /private/tmp -- "Inspect only this workspace. Show a human-readable report with four short sections: Setup, pwd, file tree, final answer. In the Setup section, explain briefly that this workspace was prepared from a fresh git clone but contains only prompt.md. In the pwd section, show the current working directory. In the file tree section, list the files in this workspace. In the final answer section, answer in very simple Chinese for a non-technical PM: 'Postgres 高并发下 lock timeout 怎么排查？' If this workspace does not contain a validated reusable insight, say that clearly and do not invent one."
+printf '## Setup\n'
+printf -- '- fresh git clone: %s\n' "${REPO_URL}"
+printf -- '- kept only prompt.md in the temp workspace\n'
+printf -- '- no client skill installed\n\n'
+
+printf '## pwd\n'
+pwd
+printf '\n## file tree\n'
+find . -maxdepth 4 -type f | sort
+printf '\n## final answer\n'
+claude -p --dangerously-skip-permissions --add-dir /private/tmp -- "这是 without-skill 版本。只根据当前 workspace 里的内容，用非常简单的中文回答给非技术 PM：Postgres 高并发下 lock timeout 怎么排查？如果这里没有经过验证的可复用 insight，请明确说没有，不要编造。"
